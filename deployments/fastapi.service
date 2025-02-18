@@ -4,15 +4,14 @@ After=network.target
 
 [Service]
 Type=simple
-User=appuser
-Group=appuser
-WorkingDirectory=/opt/fastapi-app
-Environment="PYTHONPATH=/opt/fastapi-app"
+User=root
+Group=root
+WorkingDirectory=/opt/workshop
+Environment="PYTHONPATH=/opt/workshop"
 Environment="SOPS_AGE_KEY_FILE=/home/workshop/.ssh/age.key"
-ExecStartPre=/bin/bash -c 'export $(/usr/bin/sops --decrypt --input-type dotenv --output-type dotenv .env.prod.enc | xargs -0)'
-ExecStart=/opt/fastapi-app/venv/bin/uvicorn app.main:app \
-          --host 0.0.0.0 \
-          --port 80 \
-          --workers 4
+ExecStart=/bin/bash -c ' \
+  export $(/usr/bin/sops --decrypt \
+  --input-type dotenv --output-type dotenv <(cat .env.testing.enc) | xargs -0); \
+  /opt/workshop/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000'
 [Install]
 WantedBy=multi-user.target
