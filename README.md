@@ -33,6 +33,7 @@ sops --encrypt --config .sops.yaml  --input-type dotenv --output-type dotenv .en
 
 ### 🔓 Decrypting Files
 ```bash
+export SOPS_AGE_KEY_FILE=~/.ssh/age.key
 # Decrypt file
-sops --decrypt --age ~/.ssh/age.key .env.prod.enc > .env
+sops --decrypt --input-type dotenv --output-type dotenv .env.prod.enc > .env
 ```
