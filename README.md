@@ -17,7 +17,7 @@ age-keygen -o age.key
 # 2. Store private key securely
 mv age.key ~/.ssh/ && chmod 600 ~/.ssh/age.key
 
-# 3. Configure SOPS
+# 3. Configure SOPS in the project
 echo 'creation_rules:
   - path_regex: .*\.enc$
    "'$(cat age.key.pub)'"' > .sops.yaml
