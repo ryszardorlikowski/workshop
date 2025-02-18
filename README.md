@@ -33,7 +33,15 @@ sops --encrypt --config .sops.yaml  --input-type dotenv --output-type dotenv .en
 
 ### 🔓 Decrypting Files
 ```bash
-export SOPS_AGE_KEY_FILE=~/.ssh/age.key
+export SOPS_AGE_KEY_FILE=/home/workshop/.ssh/age.key
 # Decrypt file
 sops --decrypt --input-type dotenv --output-type dotenv .env.prod.enc > .env
+```
+
+
+### 📚 Reencrypting Files
+After adding new keys to the `.sops.yaml` file, you can reencrypt the file with the new keys.
+```bash
+# Reencrypt file
+sops updatekeys --yes --input-type dotenv .env.testing.enc
 ```

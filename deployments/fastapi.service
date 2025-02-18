@@ -8,11 +8,11 @@ User=appuser
 Group=appuser
 WorkingDirectory=/opt/fastapi-app
 Environment="PYTHONPATH=/opt/fastapi-app"
-Environment="SOPS_AGE_KEY_FILE=/etc/sops/keys/prod.key"
+Environment="SOPS_AGE_KEY_FILE=/home/workshop/.ssh/age.key"
 ExecStartPre=/bin/bash -c 'export $(/usr/bin/sops --decrypt --input-type dotenv --output-type dotenv .env.prod.enc | xargs -0)'
 ExecStart=/opt/fastapi-app/venv/bin/uvicorn app.main:app \
           --host 0.0.0.0 \
-          --port 8000 \
+          --port 80 \
           --workers 4
 [Install]
 WantedBy=multi-user.target
